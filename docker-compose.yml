@@ -9,6 +9,7 @@ services:
       POSTGRES_DB: managers
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5432:5432"
     networks:
@@ -18,9 +19,10 @@ services:
     build: ./app
     environment:
       DB_HOST: db
-      DB_NAME: managers
-      DB_USER: admin
-      DB_PASSWORD: secret
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secret
+      MANAGERS_DB: managers
+      CLIENTS_DB: clients
     ports:
       - "8501:8501"
     depends_on:
