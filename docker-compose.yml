@@ -6,7 +6,7 @@ services:
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: secret
-      POSTGRES_DB: managers
+      POSTGRES_DB: postgres  # Используем дефолтную базу для инициализации
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -19,14 +19,15 @@ services:
     build: ./app
     environment:
       DB_HOST: db
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: secret
+      DB_USER: admin
+      DB_PASSWORD: secret
       MANAGERS_DB: managers
       CLIENTS_DB: clients
     ports:
       - "8501:8501"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - app-network
 
