@@ -1,7 +1,7 @@
 version: '3.8'
 
-services:
-  db:
+services: # Сервисы
+  db: # База данных
     image: postgres:13
     environment:
       POSTGRES_USER: admin
@@ -14,6 +14,12 @@ services:
       - "5432:5432"
     networks:
       - app-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U admin -d managers" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   app:
     build: ./app
