@@ -1,3 +1,2 @@
-streamlit
-psycopg2-binary
-sqlalchemy
+streamlit>=1.30
+psycopg2-binary>=2.9
